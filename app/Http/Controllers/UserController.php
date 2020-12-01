@@ -29,14 +29,14 @@ class UserController extends Controller
 
         if ($user) {
             $user->update($userData + ['access_token' => sha1(uniqid('', true))]);
-        }
-
-        else {
-            $user = User::create($userData + ['access_token' => sha1(uniqid('', true))]);
+        } else {
+            $user = User::create(
+                $userData + ['access_token' => sha1(uniqid('', true)), 'coins' => 0, 'trophies' => 0]
+            );
         }
 
         return response()->json([
-            'access_token' => $user->access_token, 'coins' => $user->coins,  'trophies' => $user->trophies,
+            'access_token' => $user->access_token, 'coins' => $user->coins, 'trophies' => $user->trophies,
         ], 200);
     }
 
@@ -45,9 +45,21 @@ class UserController extends Controller
         return response()->json(['user' => request()->user()], 200);
     }
 
-    final public function getUserCoinsAndTrophies(): JsonResponse
+    final public function getUserCoinsAndTrophies(Request $request): JsonResponse
     {
+        $validator = Validator::make($request->all(), [
+            'coins' => 'nullable|numeric',
+            'trophies' => 'nullable|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
         $user = request()->user();
+        $coinsAndTrophies = $validator->validated();
+        $user->increment('coins', $coinsAndTrophies['coins'] ?? 0);
+        $user->increment('trophies', $coinsAndTrophies['trophies'] ?? 0);
 
         return response()->json([
             'coins' => $user->coins, 'trophies' => $user->trophies,

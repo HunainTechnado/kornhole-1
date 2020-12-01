@@ -10,8 +10,8 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id', 191)->unique();
-            $table->string('email', 191);
+            $table->string('user_id')->unique();
+            $table->string('email');
             $table->enum('platform', ['Facebook', 'Google', 'Apple', 'Guest']);
             $table->enum('OS', ['Android', 'iOS']);
             $table->unsignedInteger('coins')->default(0);

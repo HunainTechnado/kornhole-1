@@ -11,8 +11,8 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->string('room_id')->nullable()->unique();
-            $table->string('player_1', 191)->nullable();
-            $table->string('player_2', 191)->nullable();
+            $table->string('player_1')->nullable();
+            $table->string('player_2')->nullable();
             $table->enum('game_type', ['Multiplayer', 'Computer']);
             $table->enum('game_mode', ['Easy', 'Medium', 'Hard'])->nullable();
             $table->enum('winner', ['player_1', 'player_2'])->nullable();

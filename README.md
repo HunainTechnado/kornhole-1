@@ -36,8 +36,11 @@ Header={ Authorization: Bearer [access_token] }
 ### 3) Get User Coins And Trophies
 #### Request:
 URL=https://dev73.myprojectstaging.com/APIs/kornhole/public/api/coins-trophies  
-Type=GET  
+Type=POST  
 Header={ Authorization: Bearer [access_token] }  
+FormData:  
+&nbsp;&nbsp;&nbsp;&nbsp;1. coins: optional,numeric  
+&nbsp;&nbsp;&nbsp;&nbsp;2. trophies: optional,numeric  
 #### Response:
 {  
 &nbsp;&nbsp;&nbsp;&nbsp;"coins": [user_coins],  
