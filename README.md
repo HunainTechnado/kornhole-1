@@ -71,7 +71,28 @@ FormData:
 &nbsp;&nbsp;&nbsp;&nbsp;"game_id": [game_id],  
 }
 
-### 6) Purchase An Item
+### 6) Declare Winner
+#### Request:
+URL=https://dev73.myprojectstaging.com/APIs/kornhole/public/api/declare-winner  
+Type=POST  
+Header={ Authorization: Bearer [access_token] }  
+FormData:  
+&nbsp;&nbsp;&nbsp;&nbsp;1. game_id: required,numeric  
+&nbsp;&nbsp;&nbsp;&nbsp;2. winning_coins: required,numeric  
+&nbsp;&nbsp;&nbsp;&nbsp;3. winning_trophies: required,numeric  
+#### Response:
+{  
+&nbsp;&nbsp;&nbsp;&nbsp;"user": {  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"user_id": "456456",  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"email": "mwaqar666@yahoo.com",  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"platform": "Facebook",  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"OS": "Android",  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"coins": 25,  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"trophies": 5  
+&nbsp;&nbsp;&nbsp;&nbsp;}  
+}
+
+### 7) Purchase An Item
 #### Request:
 URL=https://dev73.myprojectstaging.com/APIs/kornhole/public/api/purchase-item  
 Type=POST  
@@ -93,7 +114,7 @@ FormData:
 &nbsp;&nbsp;&nbsp;&nbsp;]  
 }
 
-### 7) Get Purchased Items
+### 8) Get Purchased Items
 #### Request:
 URL=https://dev73.myprojectstaging.com/APIs/kornhole/public/api/get-purchased-items  
 Type=GET  
