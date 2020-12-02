@@ -70,3 +70,41 @@ FormData:
 {  
 &nbsp;&nbsp;&nbsp;&nbsp;"game_id": [game_id],  
 }
+
+### 6) Purchase An Item
+#### Request:
+URL=https://dev73.myprojectstaging.com/APIs/kornhole/public/api/purchase-item  
+Type=POST  
+Header={ Authorization: Bearer [access_token] }  
+FormData:  
+&nbsp;&nbsp;&nbsp;&nbsp;1. item_id: required,string  
+&nbsp;&nbsp;&nbsp;&nbsp;2. item_name: required,string  
+&nbsp;&nbsp;&nbsp;&nbsp;3. item_price: required,numeric  
+#### Response:
+{  
+&nbsp;&nbsp;&nbsp;&nbsp;"items": [  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"user_id": [user_id],  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"item_id": [item_id],  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"item_name": [item_name],  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"item_price": [item_price]  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}  
+&nbsp;&nbsp;&nbsp;&nbsp;]  
+}
+
+### 7) Get Purchased Items
+#### Request:
+URL=https://dev73.myprojectstaging.com/APIs/kornhole/public/api/get-purchased-items  
+Type=GET  
+Header={ Authorization: Bearer [access_token] }  
+#### Response:
+{  
+&nbsp;&nbsp;&nbsp;&nbsp;"items": [  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"user_id": [user_id],  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"item_id": [item_id],  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"item_name": [item_name],  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"item_price": [item_price]  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}  
+&nbsp;&nbsp;&nbsp;&nbsp;]  
+}

@@ -9,6 +9,7 @@ class Game extends Model
 {
     protected $table = 'games';
     protected $fillable = ['room_id', 'player_1', 'player_2', 'game_type', 'winner', 'game_status'];
+    protected $hidden = ['created_at', 'updated_at'];
 
     final public function firstPlayer(): BelongsTo
     {

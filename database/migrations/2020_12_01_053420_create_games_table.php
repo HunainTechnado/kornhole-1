@@ -8,7 +8,7 @@ class CreateGamesTable extends Migration
 {
     final public function up(): void
     {
-        Schema::create('games', function (Blueprint $table) {
+        Schema::create('games', static function (Blueprint $table) {
             $table->id();
             $table->string('room_id')->nullable()->unique();
             $table->string('player_1')->nullable();
@@ -20,7 +20,7 @@ class CreateGamesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('games', function (Blueprint $table) {
+        Schema::table('games', static function (Blueprint $table) {
             $table->foreign('player_1')->references('user_id')->on('users')->cascadeOnDelete();
             $table->foreign('player_2')->references('user_id')->on('users')->cascadeOnDelete();
         });

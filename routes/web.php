@@ -19,8 +19,11 @@ Route::group(['prefix' => 'api'], static function () {
 
     Route::group(['middleware' => 'auth'], static function () {
         Route::get('user', ['uses' => 'UserController@getAuthUser']);
+        Route::post('declare-winner', ['uses' => 'GameController@declareWinner']);
         Route::post('coins-trophies', ['uses' => 'UserController@getUserCoinsAndTrophies']);
         Route::post('start-multiplayer-game', ['uses' => 'GameController@startMultiPlayerGame']);
         Route::post('start-singleplayer-game', ['uses' => 'GameController@startSinglePlayerGame']);
+        Route::post('purchase-item', ['uses' => 'PurchasedItemController@purchaseItem']);
+        Route::get('get-purchased-items', ['uses' => 'PurchasedItemController@getPurchasedItems']);
     });
 });
