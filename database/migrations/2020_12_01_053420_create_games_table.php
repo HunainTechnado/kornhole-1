@@ -16,7 +16,7 @@ class CreateGamesTable extends Migration
             $table->enum('game_type', ['Multiplayer', 'Computer']);
             $table->enum('game_mode', ['Easy', 'Medium', 'Hard'])->nullable();
             $table->enum('winner', ['player_1', 'player_2'])->nullable();
-            $table->enum('game_status', ['Created', 'Started', 'Finished'])->default('Created');
+            $table->enum('game_status', ['Started', 'Finished'])->default('Started');
             $table->timestamps();
         });
 

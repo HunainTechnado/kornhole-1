@@ -22,7 +22,7 @@ class GameController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $game = new Game($validator->validated() + ['game_type' => 'Multiplayer', 'game_status' => 'Started']);
+        $game = new Game($validator->validated() + ['game_type' => 'Multiplayer']);
         $game->firstPlayer()->associate($request->user())->save();
 
         return response()->json(['game_id' => $game->id], 200);
@@ -38,7 +38,7 @@ class GameController extends Controller
             return response()->json($validator->errors(), 422);
         }
 
-        $game = new Game($validator->validated() + ['game_type' => 'Computer', 'game_status' => 'Started']);
+        $game = new Game($validator->validated() + ['game_type' => 'Computer']);
         $game->firstPlayer()->associate($request->user())->save();
 
         return response()->json(['game_id' => $game->id], 200);
@@ -67,9 +67,9 @@ class GameController extends Controller
             $game->update(['winner' => 'player_2']);
         }
 
+        $game->update(['game_status' => 'Finished']);
         $user->increment('coins', $request->get('winning_coins'));
         $user->increment('trophies', $request->get('winning_trophies'));
-        $game->update(['game_status' => 'Finished']);
 
         return response()->json(compact('user'));
     }

@@ -13,7 +13,7 @@ class CreatePurchasedProductsTable extends Migration
             $table->string('user_id');
             $table->string('item_id');
             $table->string('item_name');
-            $table->decimal('item_price', 5, 2);
+            $table->decimal('item_price', 7, 2);
             $table->timestamps();
         });
 

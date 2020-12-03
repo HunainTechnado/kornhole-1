@@ -11,8 +11,8 @@ class CreateUserAchievementsTable extends Migration
         Schema::create('user_achievements', static function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
-            $table->unsignedSmallInteger('winning_coins');
-            $table->unsignedSmallInteger('winning_trophies');
+            $table->unsignedSmallInteger('coins_change');
+            $table->unsignedSmallInteger('trophies_change');
             $table->timestamp('created_at');
         });
 

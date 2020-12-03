@@ -12,10 +12,11 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('user_id')->unique();
             $table->string('email');
+            $table->text('image');
             $table->enum('platform', ['Facebook', 'Google', 'Apple', 'Guest']);
             $table->enum('OS', ['Android', 'iOS']);
-            $table->unsignedInteger('coins')->default(0);
-            $table->unsignedInteger('trophies')->default(0);
+            $table->unsignedMediumInteger('coins')->default(0);
+            $table->unsignedMediumInteger('trophies')->default(0);
             $table->string('access_token')->nullable();
             $table->timestamps();
         });
