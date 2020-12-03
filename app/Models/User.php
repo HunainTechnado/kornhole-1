@@ -8,7 +8,6 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Collection;
 use Laravel\Lumen\Auth\Authorizable;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
@@ -32,11 +31,5 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     final public function purchasedItems(): HasMany
     {
         return $this->hasMany(PurchasedItem::class, 'user_id', 'user_id');
-    }
-
-    final public function games(): HasMany
-    {
-        /** @noinspection PhpParamsInspection */
-        return $this->gamesAsSecondPlayer()->union($this->gamesAsSecondPlayer());
     }
 }

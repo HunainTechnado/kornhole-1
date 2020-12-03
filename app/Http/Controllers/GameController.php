@@ -15,25 +15,15 @@ class GameController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'room_id' => 'required|string',
+            'player_2' => 'required|exists:users,user_id',
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
-        $data = $validator->validated();
-        $requestedUser = $request->user();
-        $game = Game::whereRoomId($data['room_id'])->wherePlayer2->first();
-
-        if (!$game) {
-            $game = new Game($data + ['game_type' => 'Multiplayer', 'game_status' => 'Created']);
-            $game->firstPlayer()->associate($requestedUser)->save();
-        }
-
-        else {
-            $game->update(['game_status' => 'Started']);
-            $game->secondPlayer()->associate($requestedUser)->save();
-        }
+        $game = new Game($validator->validated() + ['game_type' => 'Multiplayer', 'game_status' => 'Started']);
+        $game->firstPlayer()->associate($request->user())->save();
 
         return response()->json(['game_id' => $game->id], 200);
     }
