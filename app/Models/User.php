@@ -17,7 +17,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     protected $table = 'users';
     protected $fillable = ['user_id', 'email', 'platform', 'OS', 'coins', 'trophies', 'access_token'];
-    protected $hidden = ['id', 'password', 'access_token', 'created_at', 'updated_at'];
+    protected $hidden = ['password', 'access_token', 'created_at', 'updated_at'];
 
     final public function gamesAsFirstPlayer(): HasMany
     {
@@ -36,6 +36,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     final public function games(): HasMany
     {
-        return $this->gamesAsSecondPlayer()->union($this->gamesAsSecondPlayer()->toBase());
+        /** @noinspection PhpParamsInspection */
+        return $this->gamesAsSecondPlayer()->union($this->gamesAsSecondPlayer());
     }
 }

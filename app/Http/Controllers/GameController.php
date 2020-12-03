@@ -23,7 +23,7 @@ class GameController extends Controller
 
         $data = $validator->validated();
         $requestedUser = $request->user();
-        $game = Game::whereRoomId($data['room_id'])->first();
+        $game = Game::whereRoomId($data['room_id'])->wherePlayer2->first();
 
         if (!$game) {
             $game = new Game($data + ['game_type' => 'Multiplayer', 'game_status' => 'Created']);

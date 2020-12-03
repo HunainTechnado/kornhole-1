@@ -6,6 +6,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
     dirname(__DIR__)
 ))->bootstrap();
 
+/** @noinspection LaravelFunctionsInspection */
 date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
 
 /*
@@ -93,8 +94,10 @@ $app->routeMiddleware([
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
-$app->register(Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
-$app->register(Laravel\Tinker\TinkerServiceProvider::class);
+
+if ($app->environment() !== 'production') {
+    $app->register(Laravel\Tinker\TinkerServiceProvider::class);
+}
 
 /*
 |--------------------------------------------------------------------------
