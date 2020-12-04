@@ -13,7 +13,7 @@ class CreateUsersTable extends Migration
             $table->string('user_id')->unique();
             $table->string('name');
             $table->string('email');
-            $table->text('image');
+            $table->string('image');
             $table->enum('platform', ['Facebook', 'Google', 'Apple', 'Guest']);
             $table->enum('OS', ['Android', 'iOS']);
             $table->unsignedMediumInteger('coins')->default(0);

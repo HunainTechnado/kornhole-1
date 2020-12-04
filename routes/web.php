@@ -19,6 +19,7 @@ Route::group(['prefix' => 'api'], static function () {
 
     Route::group(['middleware' => 'auth'], static function () {
         Route::get('user', ['uses' => 'UserController@getAuthUser']);
+        Route::get('user/{user:user_id}', ['uses' => 'UserController@getUser']);
         Route::post('declare-winner', ['uses' => 'GameController@declareWinner']);
         Route::post('coins-trophies', ['uses' => 'UserController@getUserCoinsAndTrophies']);
         Route::post('start-multiplayer-game', ['uses' => 'GameController@startMultiPlayerGame']);

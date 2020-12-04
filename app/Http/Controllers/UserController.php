@@ -27,6 +27,12 @@ class UserController extends Controller
         }
 
         $userData = $validator->validated();
+
+        $image = base64_decode($userData['image']);
+        $imagePath = public_path(uniqid('', true) . '.' . 'png');
+        file_put_contents($imagePath, $image);
+        $userData['image'] = $imagePath;
+
         $user = User::where('user_id', '=', $userData['user_id'])->first();
 
         if ($user) {
@@ -44,7 +50,15 @@ class UserController extends Controller
 
     final public function getAuthUser(): JsonResponse
     {
-        return response()->json(['user' => request()->user()]);
+        $user = request()->user();
+        $user->image = base64_encode(file_get_contents($user->image));
+        return response()->json(compact('user'), 200, [], JSON_UNESCAPED_SLASHES);
+    }
+
+    final public function getUser(User $user): JsonResponse
+    {
+        $user->image = base64_encode(file_get_contents($user->image));
+        return response()->json(compact('user'), 200, [], JSON_UNESCAPED_SLASHES);
     }
 
     final public function getUserCoinsAndTrophies(Request $request): JsonResponse
