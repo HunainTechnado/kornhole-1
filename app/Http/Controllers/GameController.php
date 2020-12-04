@@ -94,6 +94,7 @@ class GameController extends Controller
             }
         }
 
+        $winningPlayer->image = base64_encode(file_get_contents($winningPlayer->image));
         return response()->json(['user' => $winningPlayer]);
     }
 }
