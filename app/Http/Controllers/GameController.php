@@ -25,7 +25,7 @@ class GameController extends Controller
         $game = new Game($validator->validated() + ['game_type' => 'Multiplayer']);
         $game->firstPlayer()->associate($request->user())->save();
 
-        return response()->json(['game_id' => $game->id], 200);
+        return response()->json(['game_id' => $game->id]);
     }
 
     final public function startSinglePlayerGame(Request $request): JsonResponse
@@ -41,36 +41,59 @@ class GameController extends Controller
         $game = new Game($validator->validated() + ['game_type' => 'Computer']);
         $game->firstPlayer()->associate($request->user())->save();
 
-        return response()->json(['game_id' => $game->id], 200);
+        return response()->json(['game_id' => $game->id]);
     }
 
     final public function declareWinner(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'game_id' => 'required|numeric|exists:games,id',
-            'winning_coins' => 'required|numeric',
-            'winning_trophies' => 'required|numeric',
+            'winning_coins' => 'nullable|numeric|gt:0',
+            'winning_trophies' => 'nullable|numeric|gt:0',
+            'losing_coins' => 'nullable|numeric|lt:0',
+            'losing_trophies' => 'nullable|numeric|lt:0',
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
-        $user = $request->user();
-        $game = Game::whereId($request->get('game_id'))->whereGameStatus('Started')->whereNull('winner')->first();
+        $data = $validator->validated();
+        $winningPlayer = $request->user();
 
-        if ($game->firstPlayer->is($user)) {
-            $game->update(['winner' => 'player_1']);
-        }
+        $game = Game::whereId($data['game_id'])->whereGameStatus('Started')->whereNull('winner')->first();
 
-        elseif ($game->secondPlayer->is($user)) {
-            $game->update(['winner' => 'player_2']);
-        }
+        $game->update(['winner' => $game->firstPlayer->is($winningPlayer) ? 'player_1' : 'player_2']);
+        $losingPlayer = $game->{$game->firstPlayer->is($winningPlayer) ? 'secondPlayer' : 'firstPlayer'};
 
         $game->update(['game_status' => 'Finished']);
-        $user->increment('coins', $request->get('winning_coins'));
-        $user->increment('trophies', $request->get('winning_trophies'));
 
-        return response()->json(compact('user'));
+        $winningPlayer->userAchievementsHistory()->create([
+            'coins_change' => $data['winning_coins'], 'trophies_change' => $data['winning_trophies']
+        ]);
+        $winningPlayer->increment('coins', $data['winning_coins'] ?? 0);
+        $winningPlayer->increment('trophies', $data['winning_trophies'] ?? 0);
+
+        $losingPlayer->userAchievementsHistory()->create([
+            'coins_change' => $data['losing_coins'], 'trophies_change' => $data['losing_trophies']
+        ]);
+
+        if ($data['losing_coins']) {
+            if ($losingPlayer->coins + $data['losing_coins'] >= 0) {
+                $losingPlayer->increment('coins', $data['losing_coins']);
+            } else {
+                $losingPlayer->update(['coins' => 0]);
+            }
+        }
+
+        if ($data['losing_trophies']) {
+            if ($losingPlayer->trophies + $data['losing_trophies'] >= 0) {
+                $losingPlayer->increment('trophies', $data['losing_trophies']);
+            } else {
+                $losingPlayer->update(['trophies' => 0]);
+            }
+        }
+
+        return response()->json(['user' => $winningPlayer]);
     }
 }

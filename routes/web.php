@@ -25,5 +25,6 @@ Route::group(['prefix' => 'api'], static function () {
         Route::post('start-singleplayer-game', ['uses' => 'GameController@startSinglePlayerGame']);
         Route::post('purchase-item', ['uses' => 'PurchasedItemController@purchaseItem']);
         Route::get('get-purchased-items', ['uses' => 'PurchasedItemController@getPurchasedItems']);
+        Route::get('leaderboard', ['uses' => 'UserAchievementController@leaderboard']);
     });
 });

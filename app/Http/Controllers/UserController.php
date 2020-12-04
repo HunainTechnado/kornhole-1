@@ -14,6 +14,8 @@ class UserController extends Controller
     final public function welcomeUser(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'image' => 'required|string',
             'user_id' => 'required|string',
             'email' => 'required|string|email',
             'platform' => 'required|string|in:Facebook,Google,Apple,Guest',
@@ -37,12 +39,12 @@ class UserController extends Controller
 
         return response()->json([
             'access_token' => $user->access_token, 'coins' => $user->coins, 'trophies' => $user->trophies,
-        ], 200);
+        ]);
     }
 
     final public function getAuthUser(): JsonResponse
     {
-        return response()->json(['user' => request()->user()], 200);
+        return response()->json(['user' => request()->user()]);
     }
 
     final public function getUserCoinsAndTrophies(Request $request): JsonResponse
