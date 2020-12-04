@@ -85,8 +85,8 @@ FormData:
 &nbsp;&nbsp;&nbsp;&nbsp;1. game_id: required,numeric  
 &nbsp;&nbsp;&nbsp;&nbsp;2. winning_coins: optional,numeric,gt:0  
 &nbsp;&nbsp;&nbsp;&nbsp;3. winning_trophies: optional,numeric,gt:0  
-&nbsp;&nbsp;&nbsp;&nbsp;3. winning_trophies: optional,numeric,lt:0  
-&nbsp;&nbsp;&nbsp;&nbsp;3. winning_trophies: optional,numeric,lt:0  
+&nbsp;&nbsp;&nbsp;&nbsp;3. losing_coins: optional,numeric,lt:0  
+&nbsp;&nbsp;&nbsp;&nbsp;3. losing_trophies: optional,numeric,lt:0  
 #### Response:
 {  
 &nbsp;&nbsp;&nbsp;&nbsp;"user": {  
